@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+{% block content %}
+{% include 'navbar.html' %}
+<div class="container mt-4">
+    {% include '_messages.html' %}
+    <div class="row">
+        <div class="col-md-12">
+        <table class="table table-sm">
+            <thead>
+                <th>Sr</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </thead>
+            <tbody>
+                {% for key, product in orders.orders.items() %}
+                <tr>
+                    <td>{{loop.index}}</td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.price}}</td>
+                    <td>{{product.quantity}}</td>
+                
+                    {% set subtotal = product.quantity|int * product.price|float  %}
+                    <td>{{subtotal + (subtotal/10) }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td></td>
+                    <td><a href="/">Continue purchasing</a></td>
+                    <td> <h5>Tax: ${{tax}}</h5></td>
+                    <td> <h5>Grand total: ${{grandTotal}}</h5> </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm">
+            <tr>
+                <td> <a href="{{url_for('get_order')}}" class="btn btn-success"> Check out</a> </td>
+                <td width="35%"></td>
+                <td> <h5>Tax: ${{tax}}</h5></td>
+                <td> <h5>Grand total: ${{grandTotal}}</h3> </td>
+            </tr>
+         </table>
+    </div>
+
+</div>
+{% endblock content %}
