@@ -122,5 +122,34 @@ def orders(invoice):
         return redirect(url_for('customerLogin'))
     return render_template('customer/order.html', invoice=invoice, tax=tax,subTotal=subTotal,grandTotal=grandTotal,customer=customer,orders=orders)
 
-             
+  ----
+@app.route('/payment',methods=['POST'])
+#creates a route to the URL "/payment"
+def payment():
+    invoice = request.get('invoice')
+#retrieves the "invoice" value from the request and stores it in a variable
+    amount = request.form.get('amount')
+#retrieves the "amount" value from the form data and stores it in a variable
+    customer = stripe.Customer.create(
+      email=request.form['stripeEmail'],
+      source=request.form['stripeToken'],
+    )
+#creates a new customer in the Stripe system
+#The resulting customer object is stored in a variable named
+    charge = stripe.Charge.create(
+      customer=customer.id,
+      description='Myshop',
+      amount=amount,
+      currency='usd',
+    )
+#creates a new charge for the customer in the Stripe system
+#resulting charge object is stored in a variable named
+    orders =  CustomerOrder.query.filter_by(customer_id = current_user.id,invoice=invoice).order_by(CustomerOrder.id.desc()).first()
+#retrieves the latest order for the current user from the database.  The resulting order object is stored in a variable
+    orders.status = 'Paid'
+#updates the "status" attribute of the "orders" object to "Paid"
+    db.session.commit()
+#saves the changes made to the database
+    return redirect(url_for('home'))
+#redirects the user back to the home page
        
