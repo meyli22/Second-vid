@@ -10,14 +10,20 @@ import os
 def customer_register():
     form = CustomerRegisterForm()
     if form.validate_on_submit():
+#if the form is valid, it will hash the password using the bcrypt library
         hash_password = bcrypt.generate_password_hash(form.password.data)
         register = Register(name=form.name.data, username=form.username.data, email=form.email.data,password=hash_password,country=form.country.data,contact=form.contact.data, address=form.address.data, zipcode=form.zipcode.data)
+#create a Register object with the form data
         db.create_all()
         db.session.add(register)
         db.session.commit()
+#add it to the database, and commit the changes
         flash(f'Welcome {form.name.data} Thank you for signing in!', 'success')
+#the user is then shown a flash message to indicate successful registration
         return redirect(url_for('login'))
+#redirected to the login page
     return render_template('customer/register.html', form=form)
+#renders the template with a form object passed to it
 
 @app.route('/customer/login', methods=['GET','POST'])
 def customerLogin():
