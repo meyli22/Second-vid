@@ -48,8 +48,11 @@ def customerLogin():
     return render_template('customer/login.html', form=form)
 
 @app.route('/customer/logout')
+#creates a route for the logout functionality
 def customer_logout():
     logout_user()
+#makes sure that the user session is ended and
+#all the user data related to the session is cleared
     return redirect(url_for('home'))
 
 # @app.route('/getorder')
@@ -72,18 +75,28 @@ def customer_logout():
 def get_order():
     if current_user.is_authenticated:
      customer_id = current_user.id
+#retrieves the ID of the currently logged in user
      invoice = secrets.token_hex(5)
+#generates a random hexadecimal string as an invoice number 
     try:
         order = CustomerOrder(invoice=invoice,customer_id=customer_id,orders=session['Shoppingcart'])
+#creates a CustomerOrder object and sets its attributes to the invoice, customer_id, and orders value
         db.session.add(order)
         db.session.commit()
+#adds the object to the database session and commits the transaction
         session.pop('Shoppingcart')
+#Deletes the items in the shopping cart
         flash('Congrats! Your order has been sent successfully','success')
+#Shows a flash message indicating that the order has been sent successfully
         return redirect(url_for('home'))
+#Redirects the user to the home page
     except Exception as e:
             print(e)
+#print the error message
             flash('Sory! Some thing went wrong with your order', 'danger')
+#show a flash message indicating that something went wrong with the order
             return redirect(url_for('getCart'))
+#user is then redirected to the getCart route
 
 
         # except Exception as e:
