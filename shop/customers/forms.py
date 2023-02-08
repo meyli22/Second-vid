@@ -44,8 +44,11 @@ class CustomerRegisterForm(FlaskForm):
 
 
 class CustomerLoginFrom(FlaskForm):
+#extends the FlaskForm class from the Flask-WTF library
     email = StringField('Email: ', [validators.Email(), validators.DataRequired()])
+#required field. must be a valid email address
     password = PasswordField('Password: ', [validators.DataRequired()])
+#required field. must not be empty.
 
 
 
