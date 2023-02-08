@@ -6,9 +6,14 @@ import json
 
 def MagerDicts(dict1,dict2):
     if isinstance(dict1, list) and isinstance(dict2,list):
+#checks if both inputs are lists
         return dict1  + dict2
+#returns a concatenated list
     if isinstance(dict1, dict) and isinstance(dict2, dict):
+#checks if both inputs are dictionaries
         return dict(list(dict1.items()) + list(dict2.items()))
+#merges the two dictionaries by creating a list of their items
+#converts the list back to a dictionary
 
 
 @app.route('/addcart', methods=['POST'])
