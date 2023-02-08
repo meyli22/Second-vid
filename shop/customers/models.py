@@ -52,14 +52,22 @@ class JsonEcodedDict(db.TypeDecorator):
 
 class CustomerOrder(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+#primary key and is of type Integer
     invoice = db.Column(db.String(20), unique=True, nullable=False)
+#string of maximum length 20 and is unique. It cannot be null
     status = db.Column(db.String(20), default='Pending', nullable=False)
+#string of maximum length 20 with a default value of "Pending". It cannot be null
     customer_id = db.Column(db.Integer, unique=False, nullable=False)
+#integer that is not unique and cannot be null
     date_created = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    orders = db.Column(JsonEcodedDict)
+#datetime with a default value of the current UTC time and cannot be null
+    orders = db.Column(db.Text)
+#text field to store the customer's order information
 
     def __repr__(self):
+#provides a string representation of the CustomerOrder model
         return'<CustomerOrder %r>' % self.invoice
+#returns the invoice of the customers order
 
 db.create_all()
 
