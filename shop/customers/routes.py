@@ -29,14 +29,20 @@ def customer_register():
 @app.route('/customer/login', methods=['GET','POST'])
 def customerLogin():
     form = CustomerLoginFrom()
+#creates an instance of the CustomerLoginFrom class and performs form validation
     if form.validate_on_submit():
         user = Register.query.filter_by(email=form.email.data).first()
+#retrieves the user data from the database based on the entered email address
         if user and bcrypt.check_password_hash(user.password, form.password.data):
+#check if the password entered by the user matches the hashed password stored in the database
             login_user(user)
+#if they match, the function logs the user 
             flash('Congrats! You are logged in!', 'success')
             next = request.args.get('next')
             return redirect(next or url_for('home'))
+#redirects the user to the home page with a success message
         flash('Sorry! Incorrect email and password. Please try again.','danger')
+#if the login fails, the function redirects the user back to the login page with a danger message
         return redirect(url_for('customerLogin'))
             
     return render_template('customer/login.html', form=form)
