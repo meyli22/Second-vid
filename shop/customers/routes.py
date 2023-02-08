@@ -12,7 +12,8 @@ def customer_register():
     if form.validate_on_submit():
 #if the form is valid, it will hash the password using the bcrypt library
         hash_password = bcrypt.generate_password_hash(form.password.data)
-        register = Register(name=form.name.data, username=form.username.data, email=form.email.data,password=hash_password,country=form.country.data,contact=form.contact.data, address=form.address.data, zipcode=form.zipcode.data)
+        register = Register(name=form.name.data, username=form.username.data, email=form.email.data,password=hash_password,
+                            country=form.country.data,contact=form.contact.data, address=form.address.data, zipcode=form.zipcode.data)
 #create a Register object with the form data
         db.create_all()
         db.session.add(register)
