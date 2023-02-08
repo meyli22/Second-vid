@@ -52,12 +52,20 @@ def AddCart():
 @app.route('/carts')
 def getCart():
     if 'Shoppingcart' not in session: or len(session['Shoppingcart']) <= 0:
+#checks whether the 'Shoppingcart' key exists in the current session and
+#if its length is greater than 0
         return redirect(url_for('home'))
+#if either of these conditions are not met, it redirects the user to the home page
     subtotal = 0
     grandtotal = 0
     for key,product in session['Shoppingcart'].items():
+#if the 'Shoppingcart' key exists in the session, calculates the subtotal of the products in the cart
         subtotal += float(product['price']) * int(product['quantity'])
         tax = ("%.2f" % (.10 * float(subtotal)))
+#calculates the tax by applying a 10% tax rate to the subtotal
         grandtotal = float("%.2f" % (1.10 * subtotal))
+#calculates the grand total by adding the tax to the subtotal
     return render_template('products/carts.html', tax = tax, grandtotal= grandtotal,brands=brands())
+#the calculated values of subtotal, tax, and grand total are then passed as variables to the template
+#with the brands data. To be displayed in the user's shopping cart
 
