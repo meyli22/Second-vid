@@ -12,15 +12,9 @@ import secrets, os
 def home():
     products = Addproduct.query.all()
     brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
-    #.filter(Addproduct.stock > 0)
     return render_template('products/index.html', products=products,brands=brands)
 
-# @app.route('/result')
-# def result():
-#     searchword = request.args.get('q')
-#     products = Addproduct.query.msearch(searchword, fields=['name','desc'] , limit=3)
-#     return render_template('products/result.html',products=products)
-#     #,brands=brands())
+
 
 @app.route('/product/<int:id>')
 def single_page(id):
@@ -99,3 +93,10 @@ def addproduct():
 #         db.session.commit()
 #         return redirect(url_for('admin'))
 #     return render_template('products/addproduct.html', form=form, title='Add a Product', brands=brands) 
+
+# @app.route('/result')
+# def result():
+#     searchword = request.args.get('q')
+#     products = Addproduct.query.msearch(searchword, fields=['name','desc'] , limit=3)
+#     return render_template('products/result.html',products=products)
+#     #,brands=brands())
