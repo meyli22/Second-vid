@@ -1,7 +1,5 @@
 {% extends "layout.html" %}
-
 {% block content %}
-
 <div class="text-center h1 text-white bg-primary p-2"> Register</div>
 <div class="container"> 
   <!-- {% include '_messages.html' %} -->
@@ -16,10 +14,7 @@
             {{ render_field(form.confirm, class="form-control") }}
             <input type="file" name="photo">
           </div>
-
           <p><input type=submit value="Register" class="btn btn-info mt-2"></p>
         </form>
 </div>
-
-
 {% endblock content %}
