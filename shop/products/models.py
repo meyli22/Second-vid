@@ -38,10 +38,12 @@ class Addproduct(db.Model):
 
 class Brand(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+#integer primary key
     name = db.Column(db.String(30), nullable=False, unique=True)
-
+#string with a maximum length of 30 characters, unique
     def __repr__(self):
         return '<Brand %r>' % self.name
+#should be represented as a string, for debugging purposes
 
 with app.app_context():
     db.create_all()
