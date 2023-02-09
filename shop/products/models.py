@@ -33,6 +33,7 @@ class Addproduct(db.Model):
 
     def __repr__(self):
         return '<Addproduct %r>' % self.name
+#displays information about the cigar when it is printed
 
 
 class Brand(db.Model):
