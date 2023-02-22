@@ -72,6 +72,7 @@ def customer_logout():
             #'orders',invoice=invoice))
 @app.route('/getorder')
 @login_required
+#only executes if the user is logged in
 def get_order():
     if current_user.is_authenticated:
      customer_id = current_user.id
