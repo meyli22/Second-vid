@@ -36,6 +36,26 @@
                     <td>{{subtotal + (subtotal/10) }}</td>
                 </tr>
                 {% endfor %}
+                <table class="table table-sm">
+           <tr> 
+               <td>   
+                   {% if ordrs.status =='Paid' %}
+                   {% else %}
+                <form action="{{url_for('payment')}}" method="POST">
+                {% set amount =  grandTotal.replace('.','') %}
+                <input type="hidden" name="amount" value="{{amount}}">
+                <input type="hidden" name="invoice" value="{{orders.invoice}}">
+                <script src="https://checkout.stripe.com/checkout.js"
+                  class="stripe-button"
+                  data-key="pk_test_MaILxTYQ15v5Uhd6NKI9wPdD00qdL0QZSl"
+                  data-name="{{customers.name}}"
+                  data-description="myshop parchase"
+                  data-amount="{{amount}}"
+                  data-currency="usd">
+                </script>
+              </form> 
+              {% endif %}
+            </td>
                 <tr>
                     <td></td>
                     <td><a href="/">Continue purchasing</a></td>
