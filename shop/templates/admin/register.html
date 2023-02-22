@@ -2,9 +2,8 @@
 {% block content %}
 <div class="text-center h1 text-white bg-primary p-2"> Register</div>
 <div class="container"> 
-  <!-- {% include '_messages.html' %} -->
+ {% include '_messages.html' %} 
         {% from "_formhelpers.html" import render_field %}
-        <!-- <div class="text-center h1 text-white bg-primary p-2"> Register</div> -->
         <form method="POST" enctype="multipart/form-data">
           <div>
             {{ render_field(form.name, class="form-control") }}
