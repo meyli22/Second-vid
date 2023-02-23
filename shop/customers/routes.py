@@ -107,17 +107,26 @@ def get_order():
 
 @app.route('/orders/<invoice>')
 @login_required
+#ensures that the user must be authenticated before accessing this page
 def orders(invoice):
     if current_user.is_authenticated:
+#checks if the user is authenticated
         grandTotal = 0
         subTotal = 0
         customer_id = current_user.id
+#gets the ID of the current user from the current_user object
         customer = Register.query.filter_by(id=customer_id).first()
-        orders = CustomerOrder.query.filter_by(customer_id=customer_id).first()#, invoice=invoice).order_by(CustomerOrder.id.desc()).first()
+#queries the Register table in the database to retrieve the user object matching the customer_id.
+        orders = CustomerOrder.query.filter_by(customer_id=customer_id).first(), invoice=invoice).order_by(CustomerOrder.id.desc()).first()
+#queries the CustomerOrder table in the database to retrieve the order object matching the customer_id.
         for _key, product in orders.orders.items():
+#loops through each item in the orders object
             subTotal == float(product['price']) * int(product['quantity'])
+#calculates the subtotal by multiplying the price and quantity of each item in the order
             tax = ("%.2f" % (.10 * float(subTotal)))
+#calculates the tax amount at a rate of 10% of the subtotal.
             grandTotal = ("%.2f" % (1.10 * float(subTotal)))
+#calculates the grand total by adding the tax amount to the subtotal
 
     else:
         return redirect(url_for('customerLogin'))
