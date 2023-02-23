@@ -54,10 +54,12 @@
     <div class="row">
         <div class="col-md-6" id="b_image">
             <img src="{{url_for('static',filename='images/' + product.image_1)}}" alt="{{product.name}}" width= 600px height="200"> 
+#displays the main product image
             
 
         </div>
         <div class="col-md-6">
+#displays the product details such as name, length, strength, price, description and a form to add the product to the cart
             <h4>Product name: {{product.name}} </h4>
             <hr>
             <p>Product length: {{product.length}} mm</p>
