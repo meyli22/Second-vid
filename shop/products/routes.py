@@ -49,16 +49,22 @@ def get_brand(id):
 @app.route('/addbrand',methods=['GET','POST'])
 def addbrand():
     if 'email' not in session:
+#checks if a user is logged in
         flash(f'Please to add a barnd you need to login first','danger')
         return redirect(url_for('login'))
+#if not logged in redirects them to the login page
     if request.method =="POST":
         getbrand = request.form.get('brand')
+#retrieves the name of the brand from the form data
         brand = Brand(name=getbrand)
-        #db.create_all()
+#creates a new Brand object using that name
         db.session.add(brand)
+#adds it to the database session
         flash(f'The brand {getbrand} was successfully added to your database','success')
         db.session.commit()
+#commits the changes to the database
         return redirect(url_for('addbrand')) 
+#redirects the user back to the addbrand page
     return render_template('products/addbrand.html', brands='brands')
     
 
