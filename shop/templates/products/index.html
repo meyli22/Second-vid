@@ -84,8 +84,8 @@
 
 
 {% else %}
-
         {% for product in products %}
+#iterates over a list of products and displays their information
       <div class="col-md-3 mt-4">
         <div class="card">
             <img src="{{url_for('static', filename='images/' + product.image_3)}}" class="card-img-top" alt="{{product.name}}" height="180" width="90">
