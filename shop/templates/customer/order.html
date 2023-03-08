@@ -1,0 +1,61 @@
+{% extends 'layout.html' %}
+{% block content %}
+{% include 'navbar.html' %}
+<div class="container mt-4">
+    {% include '_messages.html' %}
+    <div class="row">
+        <div class="col-md-12">
+            Customer name: {{customer.name}}
+            <br>
+            Customer email: {{customer.email}}
+            <br>
+            Customer contact: {{customer.contact}}
+            <br>
+            Invoice: {{orders.invoice}}
+            <br>
+        <table class="table table-sm">
+            <thead>
+                <th>Sr</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </thead>
+            <tbody>
+                {% for key, product in orders.orders.items() %}
+                <tr>
+                    <td>{{loop.index}}</td>
+                    <td>{{product.name}}</td>
+                    <td>${{"%.2f"|format(product.price)}}</td>
+                    <td>{{product.quantity}}</td>
+
+                    {% set subtotal = product.quantity|int * product.price|float  %}
+                    <td>${{"%.2f"|format(subtotal)}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <table class="table table-sm">
+            <tr>
+                <td> <form action="{{url_for('payment')}}" method="POST">
+                    
+                        <script
+                          src="https://checkout.stripe.com/checkout.js"
+                          class="stripe-button"
+                          data-key="pk_test_51MiiqEG4Xz7PxOC0DmCEZCUIVyMzfmCTJekTNZk8w9oS2UBDWfQ7FvhWfmEMZ6ed2HxUB2XjUNKgW1huZ8NiASC0003aEUko2Z"
+                          data-name="Cigar E-Commerce Website"
+                          data-description="Credit Card Payment"
+                          data-amount=""
+                          data-currency="usd">
+                        </script>
+                      </form></td>
+                <td width="35%"></td>
+                <td> <h5>Tax: ${{tax}}</h5></td>
+                <td> <h5>Grand total: ${{grandTotal}}</h5> </td>
+               
+            </tr>
+         </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
+{% include '_messages.html' %}
+<div class="container">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <h2 class="text-center bg-info p-2"> Add a cigar</h2>
+        {% from "_formhelpers.html" import render_field %}
+        <form action="" method="POST" enctype="multipart/form-data">
+            {{ render_field(form.name, class="form-control", placeholders="Add the name of the Cigar")}}
+            {{ render_field(form.price, class="form-control", placeholders="Add the price of the Cigar")}}
+            {{ render_field(form.stock, class="form-control", placeholders="Add the stock of the Cigar")}}
+            {{ render_field(form.length, class="form-control", placeholders="Add the length of the Cigar")}}
+            {{ render_field(form.strength, class="form-control", placeholders="Add the strength of the Cigar")}}
+           
+            <label for="brand">Add brand</label>
+            <select name="brand" id="brand" class="form-control" required>
+                <option value="">Choose brand</option>
+                {% for brand in brands %}
+            <option value="{{brand.id}}">{{brand.name}}</option>
+                {% endfor %}
+            </select>
+
+            {{ render_field(form.description, class="form-control", placeholders="Add the description of the Cigar", rows="10")}}
+
+            <div class="container">
+                <div class="row">
+                    
+                    <div class="col-md-4">{{ render_field(form.image_1, class="form-control") }}</div>
+                    <div class="col-md-4">{{ render_field(form.image_2, class="form-control") }}</div>
+                    <div class="col-md-4">{{ render_field(form.image_3, class="form-control") }}</div>
+                </div>
+            </div>
+
+
+        <button type="submit" class="btn btn-outline-info mt-4"> Add cigar</button>
+
+        </form>
+    </div>
+    <div class="col-md-2"></div> 
+</div>
+
+
+{% endblock content %}
+
